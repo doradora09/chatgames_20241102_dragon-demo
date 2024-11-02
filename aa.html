@@ -134,11 +134,11 @@
 </head>
 <body>
     <!-- BGM Audio Element -->
-    <audio id="bgm" src="battle.mp3" loop></audio>
+    <audio id="bgm" src="battle.mp3" loop preload="auto"></audio>
 
     <!-- SE音のオーディオ要素 -->
-    <audio id="se-sword" src="剣で斬る1.mp3"></audio>
-    <audio id="se-dragon-fire" src="ドラゴンが火を吐く.mp3"></audio>
+    <audio id="se-sword" src="sword_slash.mp3" preload="auto"></audio>
+    <audio id="se-dragon-fire" src="dragon_fire.mp3" preload="auto"></audio>
 
     <!-- ミュートボタン -->
     <button class="mute-toggle" onclick="toggleMute()">ミュート</button>
@@ -349,9 +349,11 @@
 
         // SE音を再生する関数
         function playSE(se) {
-            if (!isMuted) {
+            if (!bgm.muted) {
                 se.currentTime = 0;
-                se.play();
+                se.play().catch(error => {
+                    console.log('SEの再生がブロックされました:', error);
+                });
             }
         }
     </script>
